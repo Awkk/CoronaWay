@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/quarantineFragment">
+
+    <fragment
+        android:id="@+id/quarantineFragment"
+        android:name="com.awisme.coronaway.QuarantineFragment"
+        android:label="@string/menu_label_cases"
+        tools:layout="@layout/fragment_quarantine" />
+    <fragment
+        android:id="@+id/relaxFragment"
+        android:name="com.awisme.coronaway.RelaxFragment"
+        android:label="@string/menu_label_relax"
+        tools:layout="@layout/fragment_relax" />
+    <fragment
+        android:id="@+id/casesFragment"
+        android:name="com.awisme.coronaway.CasesFragment"
+        android:label="@string/menu_label_cases"
+        tools:layout="@layout/fragment_cases" />
+</navigation>

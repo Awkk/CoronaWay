@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/relaxFragment"
+        android:enabled="true"
+        android:icon="@drawable/relax_icon"
+        android:title="@string/menu_label_relax" />
+    <item
+        android:id="@+id/quarantineFragment"
+        android:enabled="true"
+        android:icon="@drawable/quarantine_icon"
+        android:title="@string/menu_label_quarantine" />
+    <item
+        android:id="@+id/casesFragment"
+        android:enabled="true"
+        android:icon="@drawable/cases_icon"
+        android:title="@string/menu_label_cases" />
+</menu>

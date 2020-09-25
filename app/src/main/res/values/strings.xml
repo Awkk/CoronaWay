@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CoronaWay</string>
+    <string name="menu_label_relax">Relax</string>
+    <string name="menu_label_quarantine">Quarantine</string>
+    <string name="menu_label_cases">Cases</string>
+
 </resources>
