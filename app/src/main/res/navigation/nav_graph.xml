@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/quarantineFragment"
         android:name="com.awisme.coronaway.QuarantineFragment"
-        android:label="@string/menu_label_cases"
+        android:label="@string/menu_label_quarantine"
         tools:layout="@layout/fragment_quarantine" />
     <fragment
         android:id="@+id/relaxFragment"
