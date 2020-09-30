@@ -16,5 +16,12 @@
     <string name="coronaway_quarantine_info_text">people are quarantining here</string>
     <string name="or_text">OR</string>
     <string name="go_btn">go button</string>
+    <string name="signup_text">No account yet? Sign Up</string>
+    <string name="welcometext_1">Welcome</string>
+    <string name="welcometext_2">Please get yourself situated to start tracking your quarantine</string>
+    <string name="welcometext_3">And look into our resources</string>
+    <string name="welcometext_4">To relax and improve mental health,</string>
+    <string name="welcometext_5">To be able to look into local COVID-19 cases</string>
+    <string name="welcometext_6">" Let’s get through this together"</string>
 
 </resources>
