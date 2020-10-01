@@ -23,5 +23,9 @@
     <string name="welcometext_4">To relax and improve mental health,</string>
     <string name="welcometext_5">To be able to look into local COVID-19 cases</string>
     <string name="welcometext_6">" Let’s get through this together"</string>
+    <string name="label_totalCases">Total cases</string>
+    <string name="label_Recovered">Recovered</string>
+    <string name="label_deaths">Deaths</string>
+    <string name="label_worldwide">Worldwide</string>
 
 </resources>
