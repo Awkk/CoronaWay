@@ -3,13 +3,139 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RelaxFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:id="@+id/link1"
+        android:layout_height="150dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/asmr1"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="70dp"
+        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Relax" />
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="280dp"
+        android:text="ASMR1" />
+
+
+    <ImageButton
+        android:id="@+id/link2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/asmr2"
+        android:layout_marginBottom="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="280dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="280dp"
+        android:text="ASMR2" />
+
+    <ImageButton
+        android:id="@+id/link3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="480dp"
+        android:src="@drawable/meditation1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="550dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="280dp"
+        android:text="MEDITATION" />
+
+
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/event1_inner"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:scrollbars="none"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+
+    <!--        app:layout_constraintVertical_bias="0.9">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:orientation="vertical">-->
+    <!--            <TextView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_marginTop="15dp"-->
+    <!--                android:layout_marginBottom="10dp"-->
+    <!--                android:gravity="center"-->
+    <!--                android:text="ASMR1" />-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/event1inList"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="15sp"-->
+    <!--        android:layout_marginBottom="5sp"-->
+    <!--        app:srcCompat="@drawable/asmr1" />-->
+
+    <!--            <TextView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_marginTop="15dp"-->
+    <!--                android:layout_marginBottom="10dp"-->
+    <!--                android:gravity="center"-->
+    <!--                android:text="ASMR2" />-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/event2inList"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="15sp"-->
+    <!--        android:layout_marginBottom="5sp"-->
+    <!--        app:srcCompat="@drawable/asmr2" />-->
+
+
+    <!--            <TextView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_marginTop="15dp"-->
+    <!--                android:layout_marginBottom="10dp"-->
+    <!--                android:gravity="center"-->
+    <!--                android:text="MEDITATION" />-->
+
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/event4inList"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="15sp"-->
+    <!--        android:layout_marginBottom="5sp"-->
+    <!--        app:srcCompat="@drawable/meditation1" />-->
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
+
+
+
+
 
 </FrameLayout>
