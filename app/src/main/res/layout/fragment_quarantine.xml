@@ -23,12 +23,6 @@
                 android:layout_height="39dp"
                 android:text="@string/quarantine" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="114dp"
-                android:layout_height="wrap_content"
-                android:text="@string/logout" />
-
         </LinearLayout>
 
         <TextView

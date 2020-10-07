@@ -51,10 +51,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (loginFormState == null) {
                     return;
                 }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
+//                loginButton.setEnabled(loginFormState.isDataValid());
+//                if (loginFormState.getUsernameError() != null) {
+//                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
+//                }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
                 }
@@ -115,9 +115,11 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+//                loadingProgressBar.setVisibility(View.VISIBLE);
+//                loginViewModel.login(usernameEditText.getText().toString(),
+//                        passwordEditText.getText().toString());
+                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -132,8 +134,4 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
-    public void sendMessage(View view) {
-        Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-        startActivity(intent);
-    }
 }

@@ -68,7 +68,6 @@
         android:enabled="false"
         android:contentDescription="@string/go_btn"
         android:src="@drawable/login_icon"
-        android:onClick="sendMessage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
