@@ -11,6 +11,7 @@
         android:theme="@style/Theme.MaterialComponents.Light">
         <activity android:name=".WelcomeActivity"></activity>
         <activity android:name=".RelaxActivity"></activity>
+        <activity android:name=".QInfoActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_login"
