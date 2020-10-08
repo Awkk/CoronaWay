@@ -36,5 +36,7 @@
     <string name="report_symptoms">Report Symptoms</string>
     <string name="here_to_help_txt">Don\'t worry we\'re here to help</string>
     <string name="covid_think_text">Do you think you have COVID-19?</string>
+    <string name="signup_head_text">Sign Up</string>
+    <string name="confirm_password">Confirm Password</string>
 
 </resources>
