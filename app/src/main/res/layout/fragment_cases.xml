@@ -8,94 +8,92 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/map"
+        <FrameLayout
+            android:id="@+id/map_fragment_container"
+            android:layout_above="@id/tl_cases"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="Map Here"
-            android:gravity="center"/>
+            android:layout_height="match_parent"/>
 
         <TableLayout
+            android:id="@+id/tl_cases"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:layout_below="@id/map"
+            android:paddingBottom="40dp"
+            android:layout_alignParentBottom="true"
             android:paddingHorizontal="30dp"
             android:stretchColumns="0,1,2">
 
             <!--  Start of Province -->
 
-            <TextView
-                android:id="@+id/tv_provinceLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="3"
-                android:text="British Columbia"
-                android:textStyle="bold"
-                android:textSize="@dimen/cases_region_label_text_size"
-                android:layout_marginVertical="@dimen/cases_region_label_margin"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_provinceLabel"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_column="3"-->
+<!--                android:text="British Columbia"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="@dimen/cases_region_label_text_size"-->
+<!--                android:layout_marginVertical="@dimen/cases_region_label_margin"/>-->
 
 
-            <TableRow>
+<!--            <TableRow>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_column="0"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_totalCases" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/label_totalCases" />-->
 
-                    <TextView
-                        android:id="@+id/tv_provinceTotalCasesNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="9138"
-                        android:textSize="@dimen/cases_region_label_text_size" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_provinceTotalCasesNum"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textSize="@dimen/cases_region_label_text_size" />-->
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_column="1"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_Recovered" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/label_Recovered" />-->
 
-                    <TextView
-                        android:id="@+id/tv_provinceRecoveredNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="7485"
-                        android:textSize="@dimen/cases_region_label_text_size" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_provinceRecoveredNum"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textSize="@dimen/cases_region_label_text_size" />-->
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_column="2"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_deaths" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/label_deaths" />-->
 
-                    <TextView
-                        android:id="@+id/tv_provinceDeathsNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="234"
-                        android:textSize="@dimen/cases_region_label_text_size" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_provinceDeathsNum"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textSize="@dimen/cases_region_label_text_size" />-->
+<!--                </LinearLayout>-->
 
-            </TableRow>
+<!--            </TableRow>-->
             <!--  End of province   -->
 
 
@@ -126,7 +124,6 @@
                         android:id="@+id/tv_countryTotalCasesNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="159K"
                         android:textSize="@dimen/cases_region_label_text_size" />
                 </LinearLayout>
 
@@ -145,7 +142,6 @@
                         android:id="@+id/tv_countryRecoveredNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="135K"
                         android:textSize="@dimen/cases_region_label_text_size" />
                 </LinearLayout>
 
@@ -164,7 +160,6 @@
                         android:id="@+id/tv_countryDeathsNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="9297"
                         android:textSize="@dimen/cases_region_label_text_size" />
                 </LinearLayout>
             </TableRow>
@@ -201,7 +196,6 @@
                         android:id="@+id/tv_worldTotalCasesNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="33.8M"
                         android:textSize="@dimen/cases_region_label_text_size" />
                 </LinearLayout>
 
@@ -221,7 +215,6 @@
                         android:id="@+id/tv_worldRecoveredNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="23.5M"
                         android:textSize="@dimen/cases_region_label_text_size" />
                 </LinearLayout>
 
@@ -241,7 +234,6 @@
                         android:id="@+id/tv_worldDeathsNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.01M"
                         android:textSize="@dimen/cases_region_label_text_size" />
                 </LinearLayout>
             </TableRow>
@@ -249,6 +241,7 @@
             <!--  End of world   -->
 
         </TableLayout>
+
     </RelativeLayout>
 
 </FrameLayout>
