@@ -3,6 +3,7 @@
     <string name="menu_label_relax">Relax</string>
     <string name="menu_label_quarantine">Quarantine</string>
     <string name="menu_label_cases">Cases</string>
+    <string name="new_case_text_view">+ %s</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

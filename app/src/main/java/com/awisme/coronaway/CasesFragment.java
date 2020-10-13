@@ -11,14 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 
 import org.json.JSONArray;
@@ -28,9 +32,10 @@ import org.json.JSONObject;
 
 public class CasesFragment extends Fragment {
     private static final String DEFAULT_COUNTRY = "Canada";
-    private TextView provinceTotal, provinceRecovered, provinceDeath;
-    private TextView countryTotal, countryRecovered, countryDeath;
-    private TextView worldTotal, worldRecovered, worldDeath;
+    private ImageView flag;
+    private TextView countryLabel;
+    private TextView countryTotal, countryRecovered, countryDeath, newCountryTotal, newCountryRecovered, newCountryDeath;
+    private TextView worldTotal, worldRecovered, worldDeath, newWorldTotal, newWorldRecovered, newWorldDeath;
     private JSONObject summary;
 
     public CasesFragment() {
@@ -47,17 +52,25 @@ public class CasesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cases, container, false);
-//        provinceTotal = view.findViewById(R.id.tv_provinceTotalCasesNum);
-//        provinceRecovered = view.findViewById(R.id.tv_provinceRecoveredNum);
-//        provinceDeath = view.findViewById(R.id.tv_provinceDeathsNum);
+
+        flag = view.findViewById(R.id.iv_icon_flag);
+        countryLabel = view.findViewById(R.id.tv_countryLabel);
 
         countryTotal = view.findViewById(R.id.tv_countryTotalCasesNum);
         countryRecovered = view.findViewById(R.id.tv_countryRecoveredNum);
         countryDeath = view.findViewById(R.id.tv_countryDeathsNum);
 
+        newCountryTotal = view.findViewById(R.id.tv_countryTotalCasesNumNew);
+        newCountryRecovered = view.findViewById(R.id.tv_countryRecoveredNumNew);
+        newCountryDeath = view.findViewById(R.id.tv_countryDeathsNumNew);
+
         worldTotal = view.findViewById(R.id.tv_worldTotalCasesNum);
         worldRecovered = view.findViewById(R.id.tv_worldRecoveredNum);
         worldDeath = view.findViewById(R.id.tv_worldDeathsNum);
+
+        newWorldTotal = view.findViewById(R.id.tv_worldTotalCasesNumNew);
+        newWorldRecovered = view.findViewById(R.id.tv_worldRecoveredNumNew);
+        newWorldDeath = view.findViewById(R.id.tv_worldDeathsNumNew);
 
         covidApiRequest();
 
@@ -78,9 +91,19 @@ public class CasesFragment extends Fragment {
             for (int i = 0; i < allCountries.length(); i++) {
                 JSONObject country = allCountries.getJSONObject(i);
                 if (country.getString("Country").equals(countryName)) {
-                    countryTotal.setText(country.getString("TotalConfirmed"));
-                    countryRecovered.setText(country.getString("TotalRecovered"));
-                    countryDeath.setText(country.getString("TotalDeaths"));
+                    String url = "https://www.countryflags.io/" + country.getString("CountryCode") + "/flat/32.png";
+
+                    Picasso.get().load(url).into(flag);
+
+                    countryLabel.setText(countryName);
+
+                    countryTotal.setText(formatCaseNum(country.getInt("TotalConfirmed"), 1000, "K"));
+                    countryRecovered.setText(formatCaseNum(country.getInt("TotalRecovered"), 1000, "K"));
+                    countryDeath.setText(formatCaseNum(country.getInt("TotalDeaths"), 1000, "K"));
+
+                    newCountryTotal.setText(getString(R.string.new_case_text_view, country.getString("NewConfirmed")));
+                    newCountryRecovered.setText(getString(R.string.new_case_text_view, country.getString("NewRecovered")));
+                    newCountryDeath.setText(getString(R.string.new_case_text_view, country.getString("NewDeaths")));
                     break;
                 }
             }
@@ -98,9 +121,14 @@ public class CasesFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     summary = response;
-                    worldTotal.setText(response.getJSONObject("Global").getString("TotalConfirmed"));
-                    worldRecovered.setText(response.getJSONObject("Global").getString("TotalRecovered"));
-                    worldDeath.setText(response.getJSONObject("Global").getString("TotalDeaths"));
+                    JSONObject global = response.getJSONObject("Global");
+                    worldTotal.setText(formatCaseNum(global.getInt("TotalConfirmed"), 1000000, "M"));
+                    worldRecovered.setText(formatCaseNum(global.getInt("TotalRecovered"), 1000000, "M"));
+                    worldDeath.setText(formatCaseNum(global.getInt("TotalDeaths"), 1000000, "M"));
+
+                    newWorldTotal.setText(getString(R.string.new_case_text_view, global.getString("NewConfirmed")));
+                    newWorldRecovered.setText(getString(R.string.new_case_text_view, global.getString("NewRecovered")));
+                    newWorldDeath.setText(getString(R.string.new_case_text_view, global.getString("NewDeaths")));
 
                     setCountry(DEFAULT_COUNTRY);
                 } catch (JSONException e) {
@@ -115,6 +143,12 @@ public class CasesFragment extends Fragment {
         });
 
         queue.add(jsonObjectRequest);
+    }
+
+    private String formatCaseNum(int num, double unitValue, String unit) {
+        double caseNum = num / unitValue;
+
+        return String.format("%.2f", caseNum) + unit;
     }
 
 }
