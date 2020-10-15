@@ -28,7 +28,7 @@
     <string name="label_Recovered">Recovered</string>
     <string name="label_deaths">Deaths</string>
     <string name="label_worldwide">Worldwide</string>
-    <string name="start_quarantine_text">Starting Your Quarantine? //Replace with  You are on day # /n # days left</string>
+    <string name="start_quarantine_text">Starting Your \nQuarantine?</string>
     <string name="date">Date Placeholder</string>
     <string name="quarantine_info">people are currently quarantining with you here </string>
     <string name="logout">Logout</string>
@@ -42,5 +42,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="check_box_privacy">By signing up you accept the Terms of Service and Privacy Policy</string>
     <string name="have_account_text">Have an account? Sign In</string>
+    <string name="lets_begin">Let\'s Begin</string>
 
 </resources>

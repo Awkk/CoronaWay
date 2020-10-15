@@ -2,11 +2,9 @@ package com.awisme.coronaway;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +67,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
         View rootView = inflater.inflate(R.layout.fragment_quarantine, container,false);
 
-        btn = (Button) rootView.findViewById(R.id.symptomsBtn);
+        btn = (Button) rootView.findViewById(R.id.symptoms_btn);
         btn.setOnClickListener(this);
         return rootView;
     }
