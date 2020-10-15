@@ -23,9 +23,10 @@
             android:layout_height="wrap_content"
             android:text="@string/date"
             android:layout_gravity="right"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="50dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:textColor="@color/design_default_color_background" />
+            android:textColor="@color/colorGreen" />
 
 <!--        <TextView-->
 <!--            android:layout_width="match_parent"-->
@@ -38,7 +39,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="40dp"
             android:text="@string/start_quarantine_text"
             android:textColor="@color/design_default_color_background"
             android:textSize="29sp" />
