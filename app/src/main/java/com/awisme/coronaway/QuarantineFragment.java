@@ -1,6 +1,8 @@
 package com.awisme.coronaway;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -40,12 +42,14 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
      * @return A new instance of fragment QuarantineFragment.
      */
     // TODO: Rename and change types and number of parameters
+    @SuppressLint("ResourceAsColor")
     public static QuarantineFragment newInstance(String param1, String param2) {
         QuarantineFragment fragment = new QuarantineFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 

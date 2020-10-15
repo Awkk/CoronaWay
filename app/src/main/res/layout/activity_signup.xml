@@ -1,65 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/loginText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="94dp"
+        android:layout_marginBottom="49dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/signup_head_text"
+        android:textColor="#0073DD"
+        android:textSize="60sp" />
 
     <EditText
         android:id="@+id/username2"
         android:layout_width="249dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_gravity="center"
         android:autofillHints="@string/prompt_email"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="188dp" />
+ />
 
     <EditText
         android:id="@+id/password2"
         android:layout_width="249dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:layout_gravity="center"
+
         android:autofillHints="@string/prompt_password"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="261dp" />
+/>
 
     <EditText
         android:id="@+id/password3"
         android:layout_width="249dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="11dp"
+
         android:autofillHints="@string/confirm_password"
-        android:hint="@string/prompt_password"
+        android:hint="@string/confirm_password"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="330dp" />
+        android:selectAllOnFocus="true" />
+
+    <CheckBox
+        android:id="@+id/check_box_privacy_agree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_gravity="center"
+        android:text="@string/check_box_privacy"
+        android:textSize="10sp"
+ />
 
     <ImageButton
         android:id="@+id/login2"
-        android:layout_width="58dp"
-        android:layout_height="62dp"
-        android:layout_gravity="start"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="90dp"
         android:contentDescription="@string/go_btn"
         android:enabled="false"
-        android:src="@drawable/login_icon"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="485dp" />
+        android:onClick="sign_in_btn"
+        android:src="@drawable/login_icon" />
 
     <TextView
-        android:id="@+id/loginText2"
+        android:id="@+id/have_account_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/signup_head_text"
-        android:textColor="#0073DD"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="143dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_gravity="center"
+        android:text="@string/have_account_text"
+        android:onClick="sign_in_redirect"
+        />
+
+</LinearLayout>

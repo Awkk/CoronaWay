@@ -19,11 +19,11 @@
     <string name="go_btn">go button</string>
     <string name="signup_text">No account yet? Sign Up</string>
     <string name="welcometext_1">Welcome</string>
-    <string name="welcometext_2">Please get yourself situated to start tracking your quarantine</string>
+    <string name="welcometext_2">Please get yourself situated \nto start tracking your quarantine</string>
     <string name="welcometext_3">And look into our resources</string>
     <string name="welcometext_4">To relax and improve mental health,</string>
     <string name="welcometext_5">To be able to look into local COVID-19 cases</string>
-    <string name="welcometext_6">" Let’s get through this together"</string>
+    <string name="welcometext_6">"Let’s get through this \ntogether"</string>
     <string name="label_totalCases">Total cases</string>
     <string name="label_Recovered">Recovered</string>
     <string name="label_deaths">Deaths</string>
@@ -40,5 +40,7 @@
     <string name="signup_head_text">Sign Up</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="title_activity_maps">Map</string>
+    <string name="check_box_privacy">By signing up you accept the Terms of Service and Privacy Policy</string>
+    <string name="have_account_text">Have an account? Sign In</string>
 
 </resources>

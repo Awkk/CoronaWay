@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuarantineFragment">
+    tools:context=".QuarantineFragment"
+    >
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -173,18 +174,11 @@
             android:layout_height="wrap_content"
             android:text="@string/message_of_the_day" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/symptomsBtn"
-                android:layout_width="182dp"
-                android:layout_height="wrap_content"
-                android:text="@string/report_symptoms"
-                />
-        </LinearLayout>
+        <Button
+            android:id="@+id/symptomsBtn"
+            android:layout_width="182dp"
+            android:layout_height="wrap_content"
+            android:text="@string/report_symptoms" />
 
     </LinearLayout>
     </LinearLayout>

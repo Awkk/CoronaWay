@@ -24,7 +24,7 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity android:name=".WelcomeActivity" />
-
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".QInfoActivity" />
         <activity
             android:name=".MainActivity"
