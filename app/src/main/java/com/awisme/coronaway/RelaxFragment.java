@@ -5,14 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +75,10 @@ public class RelaxFragment extends Fragment {
         startActivity(intent);
     }
 
+    public void click_intent(Intent intent){
+        startActivity(intent);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,29 +97,55 @@ public class RelaxFragment extends Fragment {
         link2 = (ImageButton) getView().findViewById(R.id.link2);
         link3 = (ImageButton) getView().findViewById(R.id.link3);
 
-
         link1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                click_btn("https://www.youtube.com/watch?v=1aPyoklnNCY&t=28s");
+                Intent intent = new Intent(getActivity(), RelaxVideoActivity.class);
+                click_intent(intent);
             }
         });
+
 
         link2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click_btn("https://www.youtube.com/watch?v=q76bMs-NwRk&t=174s");
+                Intent intent = new Intent(getActivity(), RelaxVideoActivity2.class);
+                click_intent(intent);
             }
         });
 
         link3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click_btn("https://www.youtube.com/watch?v=O-6f5wQXSu8");
+                Intent intent = new Intent(getActivity(), RelaxVideoActivity3.class);
+                click_intent(intent);
             }
         });
+
+
+//        link1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                click_btn("https://www.youtube.com/watch?v=1aPyoklnNCY&t=28s");
+//            }
+//        });
+
+//        link2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                click_btn("https://www.youtube.com/watch?v=q76bMs-NwRk&t=174s");
+//            }
+//        });
+
+//        link3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                click_btn("https://www.youtube.com/watch?v=O-6f5wQXSu8");
+//            }
+//        });
     }
+
 
 
 

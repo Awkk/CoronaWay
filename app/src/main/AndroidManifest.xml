@@ -25,6 +25,9 @@
         -->
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".SignUpActivity" />
+        <activity android:name=".RelaxVideoActivity"/>
+        <activity android:name=".RelaxVideoActivity2"/>
+        <activity android:name=".RelaxVideoActivity3"/>
         <activity android:name=".QInfoActivity" />
         <activity
             android:name=".MainActivity"
