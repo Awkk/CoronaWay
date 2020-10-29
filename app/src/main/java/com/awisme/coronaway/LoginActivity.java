@@ -1,4 +1,4 @@
-package com.awisme.coronaway.ui.login;
+package com.awisme.coronaway;
 
 import android.app.Activity;
 
@@ -17,16 +17,15 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.awisme.coronaway.R;
-import com.awisme.coronaway.SignUpActivity;
-import com.awisme.coronaway.WelcomeActivity;
+import com.awisme.coronaway.ui.login.LoggedInUserView;
+import com.awisme.coronaway.ui.login.LoginFormState;
+import com.awisme.coronaway.ui.login.LoginResult;
 import com.awisme.coronaway.ui.login.LoginViewModel;
 import com.awisme.coronaway.ui.login.LoginViewModelFactory;
 
