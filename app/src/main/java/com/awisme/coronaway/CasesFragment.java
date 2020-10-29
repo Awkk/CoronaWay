@@ -7,7 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,15 +199,15 @@ public class CasesFragment extends Fragment {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.select_country_dialog, null);
 
-        ListView lvCountries = dialogView.findViewById(R.id.lv_countryList);
+        RecyclerView rvCountryList = dialogView.findViewById(R.id.rv_countryList);
+        CountryListAdapter adapter = new CountryListAdapter(countryList);
 
-        CountryListAdapter adapter = new CountryListAdapter(getContext(), countryList);
-        lvCountries.setAdapter(adapter);
+        rvCountryList.setAdapter(adapter);
+        rvCountryList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         dialogBuilder.setView(dialogView);
 
         dialogBuilder.setTitle("Select a country");
-
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
