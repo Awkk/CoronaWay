@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
@@ -85,7 +82,7 @@ public class CasesFragment extends Fragment {
         transaction.replace(R.id.map_fragment_container, mapsFragment).commit();
     }
 
-    private void setCountry(String countryName) {
+    private void setCasesByCountry(String countryName) {
         try {
             JSONArray allCountries = summary.getJSONArray("Countries");
             for (int i = 0; i < allCountries.length(); i++) {
@@ -130,7 +127,7 @@ public class CasesFragment extends Fragment {
                     newWorldRecovered.setText(getString(R.string.new_case_text_view, global.getString("NewRecovered")));
                     newWorldDeath.setText(getString(R.string.new_case_text_view, global.getString("NewDeaths")));
 
-                    setCountry(DEFAULT_COUNTRY);
+                    setCasesByCountry(DEFAULT_COUNTRY);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

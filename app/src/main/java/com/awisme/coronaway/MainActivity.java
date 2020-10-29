@@ -34,14 +34,6 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragNavHost = getSupportFragmentManager().findFragmentById(R.id.fragNavHost);
         navController = NavHostFragment.findNavController(fragNavHost);
         NavigationUI.setupWithNavController(bottomNavView, navController);
-
-        // AppBar setup
-        Set<Integer> topLevelDestinations = new HashSet<>();
-        topLevelDestinations.add(R.id.casesFragment);
-        topLevelDestinations.add(R.id.relaxFragment);
-        topLevelDestinations.add(R.id.quarantineFragment);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
 
 
