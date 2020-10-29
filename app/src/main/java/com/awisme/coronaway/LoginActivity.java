@@ -58,14 +58,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
 
-
+                progressBar.setVisibility(View.VISIBLE);
 
                 //register the user in firebase
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            progressBar.setVisibility(View.VISIBLE);
                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
