@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "660162110869",
+    "firebase_url": "https://coronaway-dbbbc.firebaseio.com",
+    "project_id": "coronaway-dbbbc",
+    "storage_bucket": "coronaway-dbbbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660162110869:android:5d622e8f26923b8d9c429c",
+        "android_client_info": {
+          "package_name": "com.awisme.coronaway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "660162110869-1j9o3nv2sdbnq88baujpqalku9r9o9tn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.awisme.coronaway",
+            "certificate_hash": "db94f9d5e704c231ba8ff13a09641f7c692420ab"
+          }
+        },
+        {
+          "client_id": "660162110869-r9dvimalht9ded6n9r1uhmthsajspbj9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbhJOsNlzP8Ia9op-BqCMTSAUWoIGAWmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "660162110869-r9dvimalht9ded6n9r1uhmthsajspbj9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
