@@ -15,6 +15,15 @@ import java.util.List;
 
 public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.ViewHolder> {
     private List<Country> countryList;
+    private Listener listener;
+
+    interface Listener {
+        void onClick(String countryName);
+    }
+
+    public void setListener(Listener listener){
+        this.listener = listener;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
@@ -38,7 +47,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Country country = countryList.get(position);
+        final Country country = countryList.get(position);
 
         View view = holder.view;
         ImageView flag = view.findViewById(R.id.iv_icon_flag);
@@ -47,6 +56,15 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
 
         String url = "https://www.countryflags.io/" + country.getCountryCode() + "/flat/32.png";
         Picasso.get().load(url).into(flag);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listener != null){
+                    listener.onClick(country.getCountry());
+                }
+            }
+        });
     }
 
     @Override

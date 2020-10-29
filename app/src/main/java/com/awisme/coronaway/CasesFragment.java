@@ -10,16 +10,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -37,10 +32,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class CasesFragment extends Fragment {
@@ -49,9 +44,9 @@ public class CasesFragment extends Fragment {
     private TextView countryLabel;
     private TextView countryTotal, countryRecovered, countryDeath, newCountryTotal, newCountryRecovered, newCountryDeath;
     private TextView worldTotal, worldRecovered, worldDeath, newWorldTotal, newWorldRecovered, newWorldDeath;
-    private JSONObject summary;
     private RequestQueue queue;
     private List<Country> countryList;
+    private MapsFragment mapsFragment;
 
     public CasesFragment() {
         // Required empty public constructor
@@ -94,10 +89,16 @@ public class CasesFragment extends Fragment {
                 showSelectCountryDialog();
             }
         });
+        countryLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSelectCountryDialog();
+            }
+        });
 
         countryList = new ArrayList<>();
 
-        covidApiRequest();
+        covidApiSummaryRequest();
 
         return view;
     }
@@ -105,7 +106,7 @@ public class CasesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Fragment mapsFragment = new MapsFragment();
+        mapsFragment = new MapsFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.map_fragment_container, mapsFragment).commit();
     }
@@ -127,15 +128,17 @@ public class CasesFragment extends Fragment {
         for (int i = 0; i < countryList.size(); i++) {
             Country country = countryList.get(i);
             if (country.getCountry().equals(countryName)) {
+                mapsFragment.changeLocation(countryName);
+
                 String url = "https://www.countryflags.io/" + country.getCountryCode() + "/flat/32.png";
 
                 Picasso.get().load(url).into(flag);
 
                 countryLabel.setText(countryName);
 
-                countryTotal.setText(formatCaseNum(country.getTotalConfirmed(), 1000, "K"));
-                countryRecovered.setText(formatCaseNum(country.getTotalRecovered(), 1000, "K"));
-                countryDeath.setText(formatCaseNum(country.getTotalDeaths(), 1000, "K"));
+                countryTotal.setText(formatCaseNum(country.getTotalConfirmed()));
+                countryRecovered.setText(formatCaseNum(country.getTotalRecovered()));
+                countryDeath.setText(formatCaseNum(country.getTotalDeaths()));
 
                 newCountryTotal.setText(getString(R.string.new_case_text_view, String.valueOf(country.getNewConfirmed())));
                 newCountryRecovered.setText(getString(R.string.new_case_text_view, String.valueOf(country.getNewRecovered())));
@@ -146,18 +149,17 @@ public class CasesFragment extends Fragment {
     }
 
 
-    private void covidApiRequest() {
+    private void covidApiSummaryRequest() {
         queue = Volley.newRequestQueue(getContext());
         String url = "https://api.covid19api.com/summary";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    summary = response;
                     JSONObject global = response.getJSONObject("Global");
-                    worldTotal.setText(formatCaseNum(global.getInt("TotalConfirmed"), 1000000, "M"));
-                    worldRecovered.setText(formatCaseNum(global.getInt("TotalRecovered"), 1000000, "M"));
-                    worldDeath.setText(formatCaseNum(global.getInt("TotalDeaths"), 1000000, "M"));
+                    worldTotal.setText(formatCaseNum(global.getInt("TotalConfirmed")));
+                    worldRecovered.setText(formatCaseNum(global.getInt("TotalRecovered")));
+                    worldDeath.setText(formatCaseNum(global.getInt("TotalDeaths")));
 
                     newWorldTotal.setText(getString(R.string.new_case_text_view, global.getString("NewConfirmed")));
                     newWorldRecovered.setText(getString(R.string.new_case_text_view, global.getString("NewRecovered")));
@@ -187,10 +189,18 @@ public class CasesFragment extends Fragment {
         queue.add(jsonObjectRequest);
     }
 
-    private String formatCaseNum(int num, double unitValue, String unit) {
-        double caseNum = num / unitValue;
+    private String formatCaseNum(int num) {
+        double caseNum = num;
+        String unit = null;
+        if (num / 1000.0 > 999) {
+            caseNum = num / 1000000.0;
+            unit = "M";
+        } else if (num > 999) {
+            caseNum = num / 1000.0;
+            unit = "K";
+        }
 
-        return String.format("%.2f", caseNum) + unit;
+        return unit == null ? String.valueOf((int) caseNum) : String.format(Locale.getDefault(), "%.2f", caseNum) + unit;
     }
 
     private void showSelectCountryDialog() {
@@ -202,6 +212,13 @@ public class CasesFragment extends Fragment {
         RecyclerView rvCountryList = dialogView.findViewById(R.id.rv_countryList);
         CountryListAdapter adapter = new CountryListAdapter(countryList);
 
+        adapter.setListener(new CountryListAdapter.Listener() {
+            @Override
+            public void onClick(String countryName) {
+                setCasesByCountry(countryName);
+            }
+        });
+
         rvCountryList.setAdapter(adapter);
         rvCountryList.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -209,8 +226,16 @@ public class CasesFragment extends Fragment {
 
         dialogBuilder.setTitle("Select a country");
 
-        AlertDialog alertDialog = dialogBuilder.create();
+        final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
+
+        adapter.setListener(new CountryListAdapter.Listener() {
+            @Override
+            public void onClick(String countryName) {
+                setCasesByCountry(countryName);
+                alertDialog.dismiss();
+            }
+        });
     }
 
 }
