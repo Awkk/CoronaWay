@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,26 +18,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsFragment extends Fragment {
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+public class MapsFragment extends Fragment implements OnMapReadyCallback {
+    SupportMapFragment mapFragment;
+    GoogleMap googleMap;
 
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            LatLng country = new LatLng(56.13, -106.35);
-            googleMap.addMarker(new MarkerOptions().position(country));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(country,3.0f));
-        }
-    };
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        changeLocation("canada");
+    }
 
     @Nullable
     @Override
@@ -48,11 +43,29 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SupportMapFragment mapFragment =
+        mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
+            mapFragment.getMapAsync(this);
         }
     }
+
+    public void changeLocation(String country) {
+        googleMap.clear();
+        Geocoder geocode = new Geocoder(getContext(), Locale.getDefault());
+        List<Address> address;
+        try {
+            address = geocode.getFromLocationName(country, 1);
+            if (address == null)
+                return;
+            Address location = address.get(0);
+            LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(latlng));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 3.5f));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
