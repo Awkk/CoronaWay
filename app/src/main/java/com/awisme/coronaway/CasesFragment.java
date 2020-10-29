@@ -34,6 +34,7 @@ public class CasesFragment extends Fragment {
     private TextView countryTotal, countryRecovered, countryDeath, newCountryTotal, newCountryRecovered, newCountryDeath;
     private TextView worldTotal, worldRecovered, worldDeath, newWorldTotal, newWorldRecovered, newWorldDeath;
     private JSONObject summary;
+    private RequestQueue queue;
 
     public CasesFragment() {
         // Required empty public constructor
@@ -76,10 +77,23 @@ public class CasesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
         Fragment mapsFragment = new MapsFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.map_fragment_container, mapsFragment).commit();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (queue != null) {
+            queue.cancelAll(new RequestQueue.RequestFilter() {
+                @Override
+                public boolean apply(Request<?> request) {
+                    return true;
+                }
+            });
+        }
     }
 
     private void setCasesByCountry(String countryName) {
@@ -111,7 +125,7 @@ public class CasesFragment extends Fragment {
 
 
     private void covidApiRequest() {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue = Volley.newRequestQueue(getContext());
         String url = "https://api.covid19api.com/summary";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
