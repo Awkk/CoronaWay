@@ -1,5 +1,6 @@
 package com.awisme.coronaway;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +11,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -19,12 +25,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CasesFragment extends Fragment {
@@ -35,6 +48,7 @@ public class CasesFragment extends Fragment {
     private TextView worldTotal, worldRecovered, worldDeath, newWorldTotal, newWorldRecovered, newWorldDeath;
     private JSONObject summary;
     private RequestQueue queue;
+    private List<Country> countryList;
 
     public CasesFragment() {
         // Required empty public constructor
@@ -70,6 +84,16 @@ public class CasesFragment extends Fragment {
         newWorldRecovered = view.findViewById(R.id.tv_worldRecoveredNumNew);
         newWorldDeath = view.findViewById(R.id.tv_worldDeathsNumNew);
 
+        ImageButton selectCountry = view.findViewById(R.id.bt_selectCountry);
+        selectCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSelectCountryDialog();
+            }
+        });
+
+        countryList = new ArrayList<>();
+
         covidApiRequest();
 
         return view;
@@ -97,29 +121,24 @@ public class CasesFragment extends Fragment {
     }
 
     private void setCasesByCountry(String countryName) {
-        try {
-            JSONArray allCountries = summary.getJSONArray("Countries");
-            for (int i = 0; i < allCountries.length(); i++) {
-                JSONObject country = allCountries.getJSONObject(i);
-                if (country.getString("Country").equals(countryName)) {
-                    String url = "https://www.countryflags.io/" + country.getString("CountryCode") + "/flat/32.png";
+        for (int i = 0; i < countryList.size(); i++) {
+            Country country = countryList.get(i);
+            if (country.getCountry().equals(countryName)) {
+                String url = "https://www.countryflags.io/" + country.getCountryCode() + "/flat/32.png";
 
-                    Picasso.get().load(url).into(flag);
+                Picasso.get().load(url).into(flag);
 
-                    countryLabel.setText(countryName);
+                countryLabel.setText(countryName);
 
-                    countryTotal.setText(formatCaseNum(country.getInt("TotalConfirmed"), 1000, "K"));
-                    countryRecovered.setText(formatCaseNum(country.getInt("TotalRecovered"), 1000, "K"));
-                    countryDeath.setText(formatCaseNum(country.getInt("TotalDeaths"), 1000, "K"));
+                countryTotal.setText(formatCaseNum(country.getTotalConfirmed(), 1000, "K"));
+                countryRecovered.setText(formatCaseNum(country.getTotalRecovered(), 1000, "K"));
+                countryDeath.setText(formatCaseNum(country.getTotalDeaths(), 1000, "K"));
 
-                    newCountryTotal.setText(getString(R.string.new_case_text_view, country.getString("NewConfirmed")));
-                    newCountryRecovered.setText(getString(R.string.new_case_text_view, country.getString("NewRecovered")));
-                    newCountryDeath.setText(getString(R.string.new_case_text_view, country.getString("NewDeaths")));
-                    break;
-                }
+                newCountryTotal.setText(getString(R.string.new_case_text_view, String.valueOf(country.getNewConfirmed())));
+                newCountryRecovered.setText(getString(R.string.new_case_text_view, String.valueOf(country.getNewRecovered())));
+                newCountryDeath.setText(getString(R.string.new_case_text_view, String.valueOf(country.getNewDeaths())));
+                break;
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 
@@ -141,7 +160,16 @@ public class CasesFragment extends Fragment {
                     newWorldRecovered.setText(getString(R.string.new_case_text_view, global.getString("NewRecovered")));
                     newWorldDeath.setText(getString(R.string.new_case_text_view, global.getString("NewDeaths")));
 
+
+                    JSONArray allCountries = response.getJSONArray("Countries");
+                    String s = allCountries.toString();
+
+                    Type listType = new TypeToken<List<Country>>() {
+                    }.getType();
+                    countryList = new Gson().fromJson(s, listType);
+
                     setCasesByCountry(DEFAULT_COUNTRY);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -160,6 +188,26 @@ public class CasesFragment extends Fragment {
         double caseNum = num / unitValue;
 
         return String.format("%.2f", caseNum) + unit;
+    }
+
+    private void showSelectCountryDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.select_country_dialog, null);
+
+        ListView lvCountries = dialogView.findViewById(R.id.lv_countryList);
+
+        CountryListAdapter adapter = new CountryListAdapter(getContext(), countryList);
+        lvCountries.setAdapter(adapter);
+
+        dialogBuilder.setView(dialogView);
+
+        dialogBuilder.setTitle("Select a country");
+
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 
 }
