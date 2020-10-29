@@ -36,7 +36,7 @@
 
     <EditText
         android:id="@+id/signup_email"
-        android:layout_width="255dp"
+        android:layout_width="249dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="12dp"
@@ -51,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
         android:layout_gravity="center"
-
         android:autofillHints="@string/prompt_password"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
@@ -59,20 +58,6 @@
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
 />
-
-    <EditText
-        android:id="@+id/signup_confirm_password"
-        android:layout_width="249dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="11dp"
-
-        android:autofillHints="@string/confirm_password"
-        android:hint="@string/confirm_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true" />
 
     <CheckBox
         android:id="@+id/check_box_privacy_agree"
@@ -89,18 +74,18 @@
         android:layout_width="61dp"
         android:layout_height="61dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@string/go_btn"
         android:enabled="false"
         android:onClick="sign_in_btn"
         android:src="@drawable/login_icon" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="30dp"
         android:visibility="invisible" />
 
     <TextView
@@ -108,8 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/have_account_text"
         android:onClick="sign_in_redirect"
-        />
+        android:text="@string/have_account_text" />
 
 </LinearLayout>

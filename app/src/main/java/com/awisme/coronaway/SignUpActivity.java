@@ -2,11 +2,9 @@ package com.awisme.coronaway;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -26,7 +24,7 @@ public class SignUpActivity extends Activity {     /**
 
         EditText mFullName, mEmail, mPassword;
         ImageButton mRegisterBtn;
-        TextView mLoginBtn;;
+        TextView mGoToLoginBtn;;
         FirebaseAuth fAuth;
         ProgressBar progressBar;
 
@@ -39,7 +37,7 @@ public class SignUpActivity extends Activity {     /**
             mEmail = findViewById(R.id.signup_email);
             mPassword = findViewById(R.id.signup_password);
             mRegisterBtn = findViewById(R.id.signup_btn_go);
-            mLoginBtn = findViewById(R.id.have_account_login);
+            mGoToLoginBtn = findViewById(R.id.have_account_login);
 
             fAuth = FirebaseAuth.getInstance();
             progressBar = findViewById(R.id.progress_bar);
@@ -70,16 +68,17 @@ public class SignUpActivity extends Activity {     /**
                     }
 
 
-                    progressBar.setVisibility(View.VISIBLE);
 
                     //register the user in firebase
                     fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                progressBar.setVisibility(View.VISIBLE);
                                 Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
                             } else {
+                                progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(SignUpActivity.this, "Error!" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
 
 
@@ -89,6 +88,14 @@ public class SignUpActivity extends Activity {     /**
 
                 }
 
+            });
+
+
+            mGoToLoginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                }
             });
         }
 
