@@ -1,6 +1,8 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <style name="case_number">
         <item name="android:textSize">25sp</item>
@@ -9,4 +11,12 @@
     <style name="new_case_number">
         <item name="android:textSize">15sp</item>
     </style>
+
+
+
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

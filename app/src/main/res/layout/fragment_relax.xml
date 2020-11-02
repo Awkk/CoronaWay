@@ -38,10 +38,10 @@
 
         <ImageButton
             android:id="@+id/link1"
-            android:layout_width="400dp"
-            android:layout_height="150dp"
+            android:layout_width="match_parent"
             android:scaleType="center"
-            android:src="@drawable/asmr1" />
+            android:src="@drawable/asmr111"
+            android:layout_height="150dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
 
     <ImageButton
         android:id="@+id/link2"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="center"
         android:src="@drawable/asmr2"
@@ -79,11 +79,11 @@
 
     <ImageButton
         android:id="@+id/link3"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="center"
 
-        android:src="@drawable/meditation1" />
+        android:src="@drawable/med1" />
 
 
 

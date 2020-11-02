@@ -31,6 +31,7 @@
         <activity android:name=".RelaxVideoActivity2"/>
         <activity android:name=".RelaxVideoActivity3"/>
         <activity android:name=".QInfoActivity" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_login" />
@@ -44,6 +45,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <activity
+            android:name=".VideoFullScreen"
+            android:screenOrientation="landscape" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 

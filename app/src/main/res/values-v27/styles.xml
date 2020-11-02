@@ -15,4 +15,5 @@
     <style name="ThemeOverlay.BottomNavView" parent="">
         <item name="colorPrimary">@color/colorMainBlue</item>
     </style>
+
 </resources>
