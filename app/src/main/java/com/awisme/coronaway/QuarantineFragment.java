@@ -6,15 +6,23 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import static android.os.Looper.getMainLooper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +109,8 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         beginBtn = (Button) rootView.findViewById(R.id.lets_begin);
         beginBtn.setOnClickListener(startClick);
 
+        final TextView date  = (TextView) rootView.findViewById(R.id.date_placeholder);
+
 
         ScheduledExecutorService scheduleTaskExecutor = Executors.newScheduledThreadPool(1);
 
@@ -112,6 +122,15 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
                 }
             }
         }, 0, 10, TimeUnit.SECONDS);
+
+        final Handler someHandler = new Handler(getMainLooper());
+        someHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                date.setText(new SimpleDateFormat("HH:mm", Locale.US).format(new Date()));
+                someHandler.postDelayed(this, 1000);
+            }
+        }, 10);
 
         checkBox1 = (CheckBox) rootView.findViewById(R.id.checkBox1);
         checkBox2= (CheckBox) rootView.findViewById(R.id.checkBox2);

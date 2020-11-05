@@ -18,7 +18,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/date_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date"
@@ -26,7 +26,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="50dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="@android:color/white" />
 
 <!--        <TextView-->
 <!--            android:layout_width="match_parent"-->
