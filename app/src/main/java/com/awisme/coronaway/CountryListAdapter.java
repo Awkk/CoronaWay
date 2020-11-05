@@ -34,6 +34,10 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         }
     }
 
+    public void setCountryList(List<Country> countryList){
+        this.countryList = countryList;
+    }
+
     public CountryListAdapter(List<Country> countryList) {
         this.countryList = countryList;
     }
@@ -52,6 +56,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         View view = holder.view;
         ImageView flag = view.findViewById(R.id.iv_icon_flag);
         TextView tvCountryName = view.findViewById(R.id.tv_countryName);
+
         tvCountryName.setText(country.getCountry());
 
         String url = "https://www.countryflags.io/" + country.getCountryCode() + "/flat/32.png";

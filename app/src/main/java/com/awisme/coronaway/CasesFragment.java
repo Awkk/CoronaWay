@@ -10,11 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -31,6 +33,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -209,22 +212,15 @@ public class CasesFragment extends Fragment {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.select_country_dialog, null);
 
+        SearchView svCountry = dialogView.findViewById(R.id.sv_countryList);
+        final TextView tvNoResult = dialogView.findViewById(R.id.tv_no_result);
         RecyclerView rvCountryList = dialogView.findViewById(R.id.rv_countryList);
-        CountryListAdapter adapter = new CountryListAdapter(countryList);
-
-        adapter.setListener(new CountryListAdapter.Listener() {
-            @Override
-            public void onClick(String countryName) {
-                setCasesByCountry(countryName);
-            }
-        });
+        final CountryListAdapter adapter = new CountryListAdapter(countryList);
 
         rvCountryList.setAdapter(adapter);
         rvCountryList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         dialogBuilder.setView(dialogView);
-
-        dialogBuilder.setTitle("Select a country");
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -236,7 +232,40 @@ public class CasesFragment extends Fragment {
                 alertDialog.dismiss();
             }
         });
+
+        svCountry.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                filterList(s);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
+            }
+
+            private void filterList(String country) {
+                List<Country> filterList = new ArrayList<>();
+                for (Country c : countryList) {
+                    if (c.getCountry().toLowerCase().contains(country.toLowerCase().trim())) {
+                        filterList.add(c);
+                    }
+                }
+                adapter.setCountryList(filterList);
+                adapter.notifyDataSetChanged();
+
+                if(filterList.size()==0){
+                    tvNoResult.setText(getResources().getString(R.string.no_result_found));
+                }else{
+                    tvNoResult.setText("");
+                }
+            }
+        });
     }
+
 
 }
 

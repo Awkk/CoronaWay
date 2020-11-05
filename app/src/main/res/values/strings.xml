@@ -44,5 +44,6 @@
     <string name="have_account_text">Have an account? Sign In</string>
     <string name="lets_begin">Let\'s Begin</string>
     <string name="prompt_name">Full Name</string>
+    <string name="no_result_found">No result found</string>
 
 </resources>
