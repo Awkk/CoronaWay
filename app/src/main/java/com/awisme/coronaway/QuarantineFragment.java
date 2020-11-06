@@ -1,17 +1,23 @@
 package com.awisme.coronaway;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.concurrent.Executors;
@@ -23,6 +29,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static android.os.Looper.getMainLooper;
+import static androidx.core.content.ContextCompat.getSystemService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,6 +71,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +84,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
     Button btn;
     Button beginBtn;
+    Button popBtn;
 
 
     CheckBox checkBox1;
@@ -108,6 +117,9 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
         beginBtn = (Button) rootView.findViewById(R.id.lets_begin);
         beginBtn.setOnClickListener(startClick);
+
+        popBtn = (Button) rootView.findViewById(R.id.message_of_day_btn);
+        popBtn.setOnClickListener(popClick);
 
         final TextView date  = (TextView) rootView.findViewById(R.id.date_placeholder);
 
@@ -147,9 +159,56 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         checkBox13 = (CheckBox) rootView.findViewById(R.id.checkBox13);
         checkBox14 = (CheckBox) rootView.findViewById(R.id.checkBox14);
 
+
+
         return rootView;
 
+
+
     }
+
+    public View.OnClickListener popClick = new View.OnClickListener() {
+        public void onClick(View v) {
+
+            onButtonShowPopupWindowClick(v);
+
+        }
+
+    };
+
+    public void onButtonShowPopupWindowClick(View view) {
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.pop_window, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            popupWindow.setElevation(50);
+        }
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+    }
+
+
 
     @Override
     public void onClick(View v) {
