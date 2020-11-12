@@ -2,6 +2,8 @@ package com.awisme.coronaway;
 import androidx.annotation.NonNull;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar loginProgressBar;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
+    TextView tQuarantine;
+    int userCounter = 0;
 
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
@@ -36,8 +45,47 @@ public class LoginActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         mLoginBtn = findViewById(R.id.login_btn);
         mCreateBtn = findViewById(R.id.no_account_signup);
-
+        tQuarantine = findViewById(R.id.quarantine_number);
+        
         mEmail.requestFocus();
+
+        //User counter for quarantining people
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        mDatabaseReference.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                userCounter = userCounter + 1;
+
+                //Convert counter to string
+                String strCounter = String.valueOf(userCounter);
+
+                //Showing the user counter in the textview
+                tQuarantine.setText(strCounter);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
             }
         });
-
+        
 
     }
 
@@ -116,4 +164,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStop();
         fAuth.removeAuthStateListener(authStateListener);
     }
+
+
+   
 }
