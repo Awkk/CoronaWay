@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -19,17 +20,26 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.text.DateFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import static android.os.Looper.getMainLooper;
-import static androidx.core.content.ContextCompat.getSystemService;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +56,10 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    //myRef firebase
+    DatabaseReference databaseUsers;
+    FirebaseAuth fAuth;
 
     public QuarantineFragment() {
         // Required empty public constructor
@@ -80,7 +94,11 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        databaseUsers = FirebaseDatabase.getInstance().getReference();
+
+
     }
+
 
     Button btn;
     Button beginBtn;
@@ -114,7 +132,6 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         btn = (Button) rootView.findViewById(R.id.symptoms_btn);
         btn.setOnClickListener(this);
 
-
         beginBtn = (Button) rootView.findViewById(R.id.lets_begin);
         beginBtn.setOnClickListener(startClick);
 
@@ -123,42 +140,92 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
         final TextView date  = (TextView) rootView.findViewById(R.id.date_placeholder);
 
-
-        ScheduledExecutorService scheduleTaskExecutor = Executors.newScheduledThreadPool(1);
-
-        // This schedule a task to run every 5 seconds for testing:
-        scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
-            public void run() {
-                if (clicked) {
-                    doTheActualJobWhenButtonClicked();
+       //**********************
+        //Does not work at the moment, not sure how to make button go invisible by checking if user exists(and user would exist after pressing the button once)
+        databaseUsers.child("users").child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    beginBtn.setVisibility(View.INVISIBLE);
+                } else {
+                    beginBtn.setVisibility(View.VISIBLE);
                 }
             }
-        }, 0, 10, TimeUnit.SECONDS);
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*
+        Saving data to firebase as TIMESTAMP
+
+        public class YourModelClass {
+        //private fields
+        private Map<String, String> timestamp;
+
+        public YourModelClass() {}
+
+        //public setters and getters for the fields
+
+        public void setTimestamp(Map<String, String> timeStamp) {this.timestamp= timestamp;}
+        public Map<String, String> getTimestamp() {return timestamp;}
+        }
+
+        Map map = new HashMap();
+        map.put("timestamp", ServerValue.TIMESTAMP);
+        ref.child("yourNode").updateChildren(map);
+
+
+        To retrieve data, as type long
+
+        public static String getTimeDate(long timestamp){
+            try{
+                DateFormat dateFormat = getDateTimeInstance();
+                Date netDate = (new Date(timestamp));
+                return dateFormat.format(netDate);
+            } catch(Exception e) {
+                return "date";
+            }
+
+       Alarm Manager
+https://developer.android.com/training/scheduling/alarms
+// Hopefully your alarm will have a lower frequency than this!
+
+        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+        SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR,
+        AlarmManager.INTERVAL_HALF_HOUR, alarmIntent);
+
+    }
+         */
+//
+//        ScheduledExecutorService scheduleTaskExecutor = Executors.newScheduledThreadPool(1);
+//
+//        // This schedule a task to run every 5 seconds for testing:
+//        scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+//            public void run() {
+//                if (clicked) {
+//                    doTheActualJobWhenButtonClicked();
+//                }
+//            }
+//        }, 0, 10, TimeUnit.SECONDS);
+
+        /*
+        getContinueExistingPeriodicTasksAfterShutdownPolicy()
+        Gets the policy on whether to continue executing existing periodic tasks even when this executor has been shutdown.
+
+         */
+
+        // Current date settext counter
         final Handler someHandler = new Handler(getMainLooper());
         someHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                date.setText(new SimpleDateFormat("HH:mm", Locale.US).format(new Date()));
+                date.setText(new SimpleDateFormat("MMM-dd HH:mm:ss", Locale.US).format(new Date()));
                 someHandler.postDelayed(this, 1000);
             }
         }, 10);
-
-        checkBox1 = (CheckBox) rootView.findViewById(R.id.checkBox1);
-        checkBox2= (CheckBox) rootView.findViewById(R.id.checkBox2);
-        checkBox3 = (CheckBox) rootView.findViewById(R.id.checkBox3);
-        checkBox4 = (CheckBox) rootView.findViewById(R.id.checkBox4);
-        checkBox5 = (CheckBox) rootView.findViewById(R.id.checkBox5);
-        checkBox6 = (CheckBox) rootView.findViewById(R.id.checkBox6);
-        checkBox7 = (CheckBox) rootView.findViewById(R.id.checkBox7);
-        checkBox8 = (CheckBox) rootView.findViewById(R.id.checkBox8);
-        checkBox9 = (CheckBox) rootView.findViewById(R.id.checkBox9);
-        checkBox10 = (CheckBox) rootView.findViewById(R.id.checkBox10);
-        checkBox11 = (CheckBox) rootView.findViewById(R.id.checkBox11);
-        checkBox12 = (CheckBox) rootView.findViewById(R.id.checkBox12);
-        checkBox13 = (CheckBox) rootView.findViewById(R.id.checkBox13);
-        checkBox14 = (CheckBox) rootView.findViewById(R.id.checkBox14);
-
 
 
         return rootView;
@@ -167,6 +234,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
     }
 
+    //popup window click
     public View.OnClickListener popClick = new View.OnClickListener() {
         public void onClick(View v) {
 
@@ -209,7 +277,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
     }
 
 
-
+    //Clicking on quarantine info fragment
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(QuarantineFragment.this.getActivity(), QInfoActivity.class);
@@ -218,59 +286,42 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
     }
 
+    //clicking on begin quarantine button
     public View.OnClickListener startClick = new View.OnClickListener() {
         public void onClick(View v) {
-            //change boolean value
-            clicked=true;
-            beginBtn.setVisibility(View.INVISIBLE);
-            doTheActualJobWhenButtonClicked();
+            saveSessionToFirebase();
 
         }
 
     };
 
-    private void doTheActualJobWhenButtonClicked() {
-        if(!checkBox1.isChecked()) {
-            checkBox1.setChecked(true);
-        }
-        else if(!checkBox2.isChecked() && checkBox1.isChecked()) {
-            checkBox2.setChecked(true);
-        }
-        else if(!checkBox3.isChecked() && checkBox2.isChecked()) {
-            checkBox3.setChecked(true);
-        }
-        else if(!checkBox4.isChecked() && checkBox3.isChecked()) {
-            checkBox4.setChecked(true);
-        }
-        else if(!checkBox5.isChecked() && checkBox4.isChecked()) {
-            checkBox5.setChecked(true);
-        }
-        else if(!checkBox6.isChecked() && checkBox5.isChecked()) {
-            checkBox6.setChecked(true);
-        }
-        else if(!checkBox7.isChecked() && checkBox6.isChecked()) {
-            checkBox7.setChecked(true);
-        }
-        else if(!checkBox8.isChecked() && checkBox7.isChecked()) {
-            checkBox8.setChecked(true);
-        }
-        else if(!checkBox9.isChecked() && checkBox8.isChecked()) {
-            checkBox9.setChecked(true);
-        }
-        else if(!checkBox10.isChecked() && checkBox9.isChecked()) {
-            checkBox10.setChecked(true);
-        }
-        else if(!checkBox11.isChecked() && checkBox10.isChecked()) {
-            checkBox11.setChecked(true);
-        }
-        else if(!checkBox12.isChecked() && checkBox11.isChecked()) {
-            checkBox12.setChecked(true);
-        }
-        else if(!checkBox13.isChecked() && checkBox12.isChecked()) {
-            checkBox13.setChecked(true);
+    private void saveSessionToFirebase() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        String strDate = dateFormat.format(date).toString();
 
-        }else if(!checkBox14.isChecked() && checkBox13.isChecked()) {
-            checkBox14.setChecked(true);
+        String id = databaseUsers.push().getKey();
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String userid = user.getUid();
+
+        String email = user.getEmail();
+
+        Boolean pressed = true;
+
+        Posting post = new Posting();
+
+        post.setDate(strDate);
+        post.setName(userid);
+        post.setEmail(email);
+        post.setPressed(pressed);
+
+        try{
+            databaseUsers.child("users").child(userid).setValue(post);
         }
+        catch(Exception e){
+            Toast.makeText(getActivity(),"error while inserting",Toast.LENGTH_LONG).show();
+        }
+        beginBtn.setVisibility(View.INVISIBLE);
     }
 }
