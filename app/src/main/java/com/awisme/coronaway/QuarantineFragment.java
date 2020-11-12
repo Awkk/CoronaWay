@@ -1,8 +1,12 @@
 package com.awisme.coronaway;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,6 +34,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static android.os.Looper.getMainLooper;
+import static androidx.core.content.ContextCompat.getSystemService;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -159,25 +165,6 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         });
 
         /*
-        Saving data to firebase as TIMESTAMP
-
-        public class YourModelClass {
-        //private fields
-        private Map<String, String> timestamp;
-
-        public YourModelClass() {}
-
-        //public setters and getters for the fields
-
-        public void setTimestamp(Map<String, String> timeStamp) {this.timestamp= timestamp;}
-        public Map<String, String> getTimestamp() {return timestamp;}
-        }
-
-        Map map = new HashMap();
-        map.put("timestamp", ServerValue.TIMESTAMP);
-        ref.child("yourNode").updateChildren(map);
-
-
         To retrieve data, as type long
 
         public static String getTimeDate(long timestamp){
@@ -191,11 +178,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
        Alarm Manager
 https://developer.android.com/training/scheduling/alarms
-// Hopefully your alarm will have a lower frequency than this!
 
-        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-        SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR,
-        AlarmManager.INTERVAL_HALF_HOUR, alarmIntent);
 
     }
          */
@@ -229,9 +212,6 @@ https://developer.android.com/training/scheduling/alarms
 
 
         return rootView;
-
-
-
     }
 
     //popup window click
@@ -239,6 +219,7 @@ https://developer.android.com/training/scheduling/alarms
         public void onClick(View v) {
 
             onButtonShowPopupWindowClick(v);
+//            startAlert();
 
         }
 
@@ -323,5 +304,27 @@ https://developer.android.com/training/scheduling/alarms
             Toast.makeText(getActivity(),"error while inserting",Toast.LENGTH_LONG).show();
         }
         beginBtn.setVisibility(View.INVISIBLE);
+
     }
+
+    public void startAlert()
+    {
+//        final Button button = buttons[2]; // replace with a button from your own UI
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override public void onReceive( Context context, Intent _ )
+            {
+
+                context.unregisterReceiver( this ); // this == BroadcastReceiver, not Activity
+            }
+        };
+
+        getActivity().registerReceiver( receiver, new IntentFilter("Day passed!") );
+
+        PendingIntent pintent = PendingIntent.getBroadcast( getActivity(), 0, new Intent("Day passed!"), 0 );
+        AlarmManager manager = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
+
+        // set alarm to fire 5 sec (1000*5) from now (SystemClock.elapsedRealtime())
+        manager.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 100*5, pintent );
+    }
+
 }

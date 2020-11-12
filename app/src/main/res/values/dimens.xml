@@ -5,4 +5,5 @@
     <dimen name="cases_region_label_margin">15dp</dimen>
     <dimen name="cases_region_label_text_size">20sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    
 </resources>
