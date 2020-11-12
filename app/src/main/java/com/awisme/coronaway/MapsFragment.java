@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        changeLocation("canada");
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.style_json));
     }
 
     @Nullable
@@ -50,17 +51,18 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void changeLocation(String country) {
+    public void changeLocation(Country country) {
         googleMap.clear();
         Geocoder geocode = new Geocoder(getContext(), Locale.getDefault());
         List<Address> address;
         try {
-            address = geocode.getFromLocationName(country, 1);
+            address = geocode.getFromLocationName(country.getCountry(), 1);
             if (address == null)
                 return;
             Address location = address.get(0);
             LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latlng));
+            googleMap.addMarker(new MarkerOptions().position(latlng).title(country.getCountry())
+                    .snippet("New Confirmed: " + country.getNewConfirmed())).showInfoWindow();
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 3.5f));
         } catch (IOException e) {
             e.printStackTrace();

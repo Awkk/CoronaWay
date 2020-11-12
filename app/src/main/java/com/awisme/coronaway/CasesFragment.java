@@ -131,7 +131,7 @@ public class CasesFragment extends Fragment {
         for (int i = 0; i < countryList.size(); i++) {
             Country country = countryList.get(i);
             if (country.getCountry().equals(countryName)) {
-                mapsFragment.changeLocation(countryName);
+                mapsFragment.changeLocation(country);
 
                 String url = "https://www.countryflags.io/" + country.getCountryCode() + "/flat/32.png";
 
