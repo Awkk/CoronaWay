@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,9 +30,14 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import static android.os.Looper.getMainLooper;
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -47,21 +53,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link QuarantineFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class QuarantineFragment extends Fragment implements View.OnClickListener {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     //myRef firebase
     DatabaseReference databaseUsers;
@@ -71,69 +63,45 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment QuarantineFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    @SuppressLint("ResourceAsColor")
-    public static QuarantineFragment newInstance(String param1, String param2) {
-        QuarantineFragment fragment = new QuarantineFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         databaseUsers = FirebaseDatabase.getInstance().getReference();
-
-
     }
-
 
     Button btn;
     Button beginBtn;
     Button popBtn;
 
-
-    CheckBox checkBox1;
-    CheckBox checkBox2;
-    CheckBox checkBox3;
-    CheckBox checkBox4;
-    CheckBox checkBox5;
-    CheckBox checkBox6;
-    CheckBox checkBox7;
-    CheckBox checkBox8;
-    CheckBox checkBox9;
-    CheckBox checkBox10;
-    CheckBox checkBox11;
-    CheckBox checkBox12;
-    CheckBox checkBox13;
-    CheckBox checkBox14;
+    List<CheckBox> checkboxes;
 
     //declare boolean
-    boolean clicked=false;
+    boolean clicked = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_quarantine, container, false);
+
+        checkboxes = new ArrayList<>();
+
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox1));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox2));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox3));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox4));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox5));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox6));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox7));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox8));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox9));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox10));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox11));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox12));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox13));
+        checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox14));
 
         btn = (Button) rootView.findViewById(R.id.symptoms_btn);
         btn.setOnClickListener(this);
@@ -144,15 +112,33 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         popBtn = (Button) rootView.findViewById(R.id.message_of_day_btn);
         popBtn.setOnClickListener(popClick);
 
-        final TextView date  = (TextView) rootView.findViewById(R.id.date_placeholder);
+        final TextView date = (TextView) rootView.findViewById(R.id.date_placeholder);
 
-       //**********************
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String userid = user.getUid();
+
+        //**********************
         //Does not work at the moment, not sure how to make button go invisible by checking if user exists(and user would exist after pressing the button once)
-        databaseUsers.child("users").child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseUsers.child("users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     beginBtn.setVisibility(View.INVISIBLE);
+                    Posting posting = dataSnapshot.getValue(Posting.class);
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+                    Date startDate;
+                    try {
+                        startDate = formatter.parse(posting.getDate());
+                        long diffInMillis = Math.abs(Calendar.getInstance().getTimeInMillis() - startDate.getTime());
+                        long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+                        for(int i = 0; i < diffInDays; i++){
+                            checkboxes.get(i).setChecked(true);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
                 } else {
                     beginBtn.setVisibility(View.VISIBLE);
                 }
@@ -273,11 +259,10 @@ https://developer.android.com/training/scheduling/alarms
             saveSessionToFirebase();
 
         }
-
     };
 
     private void saveSessionToFirebase() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
         Date date = new Date();
         String strDate = dateFormat.format(date).toString();
 
@@ -297,34 +282,32 @@ https://developer.android.com/training/scheduling/alarms
         post.setEmail(email);
         post.setPressed(pressed);
 
-        try{
+        try {
             databaseUsers.child("users").child(userid).setValue(post);
-        }
-        catch(Exception e){
-            Toast.makeText(getActivity(),"error while inserting",Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "error while inserting", Toast.LENGTH_LONG).show();
         }
         beginBtn.setVisibility(View.INVISIBLE);
 
     }
 
-    public void startAlert()
-    {
+    public void startAlert() {
 //        final Button button = buttons[2]; // replace with a button from your own UI
         BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override public void onReceive( Context context, Intent _ )
-            {
+            @Override
+            public void onReceive(Context context, Intent _) {
 
-                context.unregisterReceiver( this ); // this == BroadcastReceiver, not Activity
+                context.unregisterReceiver(this); // this == BroadcastReceiver, not Activity
             }
         };
 
-        getActivity().registerReceiver( receiver, new IntentFilter("Day passed!") );
+        getActivity().registerReceiver(receiver, new IntentFilter("Day passed!"));
 
-        PendingIntent pintent = PendingIntent.getBroadcast( getActivity(), 0, new Intent("Day passed!"), 0 );
-        AlarmManager manager = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
+        PendingIntent pintent = PendingIntent.getBroadcast(getActivity(), 0, new Intent("Day passed!"), 0);
+        AlarmManager manager = (AlarmManager) (getActivity().getSystemService(Context.ALARM_SERVICE));
 
         // set alarm to fire 5 sec (1000*5) from now (SystemClock.elapsedRealtime())
-        manager.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 100*5, pintent );
+        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 100 * 5, pintent);
     }
 
 }
