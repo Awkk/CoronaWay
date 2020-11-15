@@ -5,10 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 /**
@@ -28,9 +31,7 @@ public class RelaxFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ImageButton link1;
-    private ImageButton link2;
-    private ImageButton link3;
+
 
     public RelaxFragment() {
         // Required empty public constructor
@@ -68,17 +69,6 @@ public class RelaxFragment extends Fragment {
     }
 
 
-
-    public void click_btn(String url){
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
-    }
-
-    public void click_intent(Intent intent){
-        startActivity(intent);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,63 +78,44 @@ public class RelaxFragment extends Fragment {
 
 
 
-}
+    }
+
+
+    Button btnstart;
+    public void click_intent(Intent intent){
+        startActivity(intent);
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btnstart = getView().findViewById(R.id.buttonstart);
 
-        link1 = (ImageButton) getView().findViewById(R.id.link1);
-        link2 = (ImageButton) getView().findViewById(R.id.link2);
-        link3 = (ImageButton) getView().findViewById(R.id.link3);
-
-        link1.setOnClickListener(new View.OnClickListener() {
+        btnstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RelaxVideoActivity.class);
-                click_intent(intent);
+//                Intent intent = new Intent(getActivity(), RelaxFragment.class);
+//                click_intent(intent);
+
+//                FragmentManager fm = getFragmentManager();
+//                FragmentTransaction ft = fm.beginTransaction();
+//                RelaxFragment llf = new RelaxFragment();
+//                ft.replace(R.id.fragment_relax1, llf);
+//                ft.commit();
+
+                VideoOptionActivity fragmentB = new VideoOptionActivity();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.videooption, fragmentB)
+                        .addToBackStack(RelaxFragment.class.getSimpleName())
+                        .commit();
+
+
             }
         });
 
-
-        link2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RelaxVideoActivity2.class);
-                click_intent(intent);
-            }
-        });
-
-        link3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RelaxVideoActivity3.class);
-                click_intent(intent);
-            }
-        });
-
-
-//        link1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                click_btn("https://www.youtube.com/watch?v=1aPyoklnNCY&t=28s");
-//            }
-//        });
-
-//        link2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click_btn("https://www.youtube.com/watch?v=q76bMs-NwRk&t=174s");
-//            }
-//        });
-
-//        link3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click_btn("https://www.youtube.com/watch?v=O-6f5wQXSu8");
-//            }
-//        });
     }
+
+
 
 
 
