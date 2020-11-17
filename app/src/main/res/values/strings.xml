@@ -45,6 +45,10 @@
     <string name="lets_begin">Let\'s Begin</string>
     <string name="prompt_name">Full Name</string>
     <string name="no_result_found">No result found</string>
-    <string name="sentence">During this pandemic, anxiety and stress levels have skyrocketed, Make time for projects that make you happy. Spend time reading, writing, knitting, decluttering, painting, meditating or doing yoga — whatever you enjoy.</string>
-
+    <string name="sentence">During this pandemic, anxiety and stress levels have skyrocketed. Make time for projects that make you happy. Spend time reading, writing, knitting, decluttering, painting, meditating or doing yoga — whatever you enjoy.</string>
+    <string name="contact_healthcare"><a href="http://www.bccdc.ca/health-professionals/clinical-resources/covid-19-care/health-care-provider-support">Contact Healthcare Provider</a></string>
+    <string name="self_assessment"><a href="https://ca.thrive.health/covid19/en">Self-Assessment Page</a></string>
+    <string name="prevent_covid"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public">How to Prevent COVID-19</a></string>
+    <string name="treat_covid"> <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/question-and-answers-hub/q-a-detail/q-a-coronaviruses#:~:text=protect">How to Treat COVID-19</a></string>
+    <string name="common_questions"> <a href="https://www.cdc.gov/coronavirus/2019-ncov/faq.html">Common Questions</a></string>
 </resources>
