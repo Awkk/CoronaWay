@@ -70,56 +70,63 @@
                 android:id="@+id/checkBox1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="false"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:clickable="false"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:clickable="false"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:clickable="false"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:clickable="false"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:clickable="false"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox7"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:clickable="false"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
         </LinearLayout>
 
@@ -133,56 +140,63 @@
                 android:id="@+id/checkBox8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="false"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox9"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:clickable="false"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox10"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="false"
                 android:layout_gravity="center"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox11"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="false"
                 android:layout_gravity="center"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox12"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="false"
                 android:layout_gravity="center"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox13"
                 android:layout_width="wrap_content"
-                android:clickable="false"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
             <CheckBox
                 android:id="@+id/checkBox14"
                 android:layout_width="wrap_content"
-                android:clickable="false"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:buttonTint="@color/colorAccent"
+                android:clickable="false" />
 
         </LinearLayout>
 
@@ -205,7 +219,7 @@
                 app:rippleColor="#33AAAAAA"
                 app:strokeColor="@color/com_facebook_button_text_color"
                 app:strokeWidth="5dp"
-                android:layout_marginTop="37dp"
+                android:layout_marginTop="45dp"
                 android:layout_marginBottom="8dp"
                 />
 
