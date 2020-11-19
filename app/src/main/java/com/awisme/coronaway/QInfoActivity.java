@@ -19,13 +19,17 @@ import java.util.Locale;
 import static android.os.Looper.getMainLooper;
 
 public class QInfoActivity extends AppCompatActivity {
-    /** Called when the activity is first created. */
-    final TextView date = (TextView)findViewById(R.id.date_placeholder1);
+    /**
+     * Called when the activity is first created.
+     */
+    private TextView date;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qinfo);
+
+        date = (TextView) findViewById(R.id.date_placeholder1);
 
         // Current date settext counter
         final Handler someHandler = new Handler(getMainLooper());
