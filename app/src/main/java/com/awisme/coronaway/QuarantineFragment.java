@@ -112,6 +112,13 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         popBtn = (Button) rootView.findViewById(R.id.message_of_day_btn);
         popBtn.setOnClickListener(popClick);
 
+        rootView.findViewById(R.id.logout_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+
         final TextView date = (TextView) rootView.findViewById(R.id.date_placeholder);
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -295,7 +302,7 @@ https://developer.android.com/training/scheduling/alarms
 //        final Button button = buttons[2]; // replace with a button from your own UI
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent _) {
+            public void onReceive(Context context, Intent i) {
 
                 context.unregisterReceiver(this); // this == BroadcastReceiver, not Activity
             }
@@ -308,6 +315,12 @@ https://developer.android.com/training/scheduling/alarms
 
         // set alarm to fire 5 sec (1000*5) from now (SystemClock.elapsedRealtime())
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 100 * 5, pintent);
+    }
+
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getContext(),LoginActivity.class));
+        getActivity().finish();
     }
 
 }
