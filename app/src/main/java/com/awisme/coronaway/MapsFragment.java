@@ -52,20 +52,22 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void changeLocation(Country country) {
-        googleMap.clear();
-        Geocoder geocode = new Geocoder(getContext(), Locale.getDefault());
-        List<Address> address;
-        try {
-            address = geocode.getFromLocationName(country.getCountry(), 1);
-            if (address == null)
-                return;
-            Address location = address.get(0);
-            LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latlng).title(country.getCountry())
-                    .snippet("New Confirmed: " + country.getNewConfirmed())).showInfoWindow();
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 3.5f));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(googleMap!=null) {
+            googleMap.clear();
+            Geocoder geocode = new Geocoder(getContext(), Locale.getDefault());
+            List<Address> address;
+            try {
+                address = geocode.getFromLocationName(country.getCountry(), 1);
+                if (address == null)
+                    return;
+                Address location = address.get(0);
+                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                googleMap.addMarker(new MarkerOptions().position(latlng).title(country.getCountry())
+                        .snippet("New Confirmed: " + country.getNewConfirmed())).showInfoWindow();
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 3.5f));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
