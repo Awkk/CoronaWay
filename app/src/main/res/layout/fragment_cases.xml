@@ -153,6 +153,11 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"/>
+
                 <ImageView
                     android:id="@+id/iv_icon_world"
                     android:src="@drawable/world"
@@ -168,9 +173,21 @@
                     android:textStyle="bold"
                     android:text="@string/label_worldwide"
                     android:textSize="@dimen/cases_region_label_text_size" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <ImageButton
+                    android:id="@+id/bt_worldwide_trigger"
+                    android:src="@drawable/arrow_down"
+                    android:background="@null"
+                    android:layout_marginEnd="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
-            <TableRow>
+            <TableRow android:id="@+id/tr_world">
 
                 <LinearLayout
                     android:layout_width="match_parent"

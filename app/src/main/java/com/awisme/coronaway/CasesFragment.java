@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -50,6 +51,9 @@ public class CasesFragment extends Fragment {
     private RequestQueue queue;
     private List<Country> countryList;
     private MapsFragment mapsFragment;
+    private TableRow trWorld;
+    private ImageButton worldTrigger;
+    private boolean showWorld;
 
     public CasesFragment() {
         // Required empty public constructor
@@ -102,6 +106,19 @@ public class CasesFragment extends Fragment {
         countryList = new ArrayList<>();
 
         covidApiSummaryRequest();
+
+        showWorld = true;
+        trWorld = view.findViewById(R.id.tr_world);
+        worldTrigger = view.findViewById(R.id.bt_worldwide_trigger);
+
+        worldTrigger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWorld = !showWorld;
+                trWorld.setVisibility(showWorld ? View.VISIBLE : View.GONE);
+                worldTrigger.setImageResource(showWorld ? R.drawable.arrow_down : R.drawable.arrow_up);
+            }
+        });
 
         return view;
     }
@@ -257,9 +274,9 @@ public class CasesFragment extends Fragment {
                 adapter.setCountryList(filterList);
                 adapter.notifyDataSetChanged();
 
-                if(filterList.size()==0){
+                if (filterList.size() == 0) {
                     tvNoResult.setText(getResources().getString(R.string.no_result_found));
-                }else{
+                } else {
                     tvNoResult.setText("");
                 }
             }
