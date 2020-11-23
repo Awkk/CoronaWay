@@ -51,4 +51,10 @@
     <string name="prevent_covid"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public">How to Prevent COVID-19</a></string>
     <string name="treat_covid"> <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/question-and-answers-hub/q-a-detail/q-a-coronaviruses#:~:text=protect">How to Treat COVID-19</a></string>
     <string name="common_questions"> <a href="https://www.cdc.gov/coronavirus/2019-ncov/faq.html">Common Questions</a></string>
+    <string name="howtorelax">How to Relax During COVID-19</string>
+    <string name="startbtn">Get Started</string>
+    <string name="asmr1">ASMR1</string>
+    <string name="asmr2">ASMR2</string>
+    <string name="asmr3">Meditation</string>
+    <string name="day">Yesterday’s the past, tomorrow’s the future, but today is a gift. That’s why it’s called the present.</string>
 </resources>
