@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class QInfoActivity extends AppCompatActivity {
      */
     private TextView date;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,21 @@ public class QInfoActivity extends AppCompatActivity {
                 someHandler.postDelayed(this, 1000);
             }
         }, 10);
+
+        TextView t1 = (TextView)findViewById((R.id.tv_Contact));
+        t1.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView t2 = (TextView)findViewById((R.id.tv_selfAssess));
+        t2.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView t3 = (TextView)findViewById((R.id.tv_prevent));
+        t3.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView t4 = (TextView)findViewById((R.id.tv_treat));
+        t4.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView t5 = (TextView)findViewById((R.id.tv_Common));
+        t5.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 }

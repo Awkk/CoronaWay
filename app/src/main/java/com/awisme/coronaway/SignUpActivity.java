@@ -77,6 +77,8 @@ public class SignUpActivity extends Activity {     /**
                             if(task.isSuccessful()){
                                 Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                                finish();
+
                             } else {
                                 progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(SignUpActivity.this, "Error!" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
@@ -85,7 +87,6 @@ public class SignUpActivity extends Activity {     /**
                             }
                         }
                     });
-
                 }
 
             });
@@ -95,18 +96,15 @@ public class SignUpActivity extends Activity {     /**
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                    finish();
+
                 }
             });
         }
-
-    public void sign_in_redirect(View view) {
-        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    public void sign_in_btn(View view) {
-        Intent intent = new Intent(SignUpActivity.this, WelcomeActivity.class);
-        startActivity(intent);
-    }
+//
+//    public void sign_in_redirect(View view) {
+//        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+//        startActivity(intent);
+//    }
 }
 
