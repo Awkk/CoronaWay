@@ -53,6 +53,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 public class QuarantineFragment extends Fragment implements View.OnClickListener {
 
     //myRef firebase
@@ -74,7 +76,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
     Button btn;
     Button beginBtn;
     Button popBtn;
-
+    Button btnRestart;
     List<CheckBox> checkboxes;
 
     //declare boolean
@@ -124,13 +126,19 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String userid = user.getUid();
 
-        //**********************
-        //Does not work at the moment, not sure how to make button go invisible by checking if user exists(and user would exist after pressing the button once)
+        final TextView tvDayCount = (TextView)rootView.findViewById(R.id.tv_dayCount);
+
+        btnRestart = (Button)rootView.findViewById(R.id.btn_restart);
+        btnRestart.setVisibility(View.INVISIBLE);
+        btnRestart.setOnClickListener(restartClick);
+
+
         databaseUsers.child("users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     beginBtn.setVisibility(View.INVISIBLE);
+                    tvDayCount.setVisibility(View.VISIBLE);
                     Posting posting = dataSnapshot.getValue(Posting.class);
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
                     Date startDate;
@@ -140,6 +148,54 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
                         long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
                         for(int i = 0; i < diffInDays; i++){
                             checkboxes.get(i).setChecked(true);
+                            switch(i) {
+                                case 1:
+                                    tvDayCount.setText("You're on Day: " + 2);
+                                    break;
+                                case 2:
+                                    tvDayCount.setText("You're on Day: " + 3);
+                                    break;
+                                case 3:
+                                    tvDayCount.setText("You're on Day: " + 4);
+                                    break;
+                                case 4:
+                                    tvDayCount.setText("You're on Day: " + 5);
+                                    break;
+                                case 5:
+                                    tvDayCount.setText("You're on Day: " + 6);
+                                    break;
+                                case 6:
+                                    tvDayCount.setText("You're on Day: " + 7);
+                                    break;
+                                case 7:
+                                    tvDayCount.setText("You're on Day: " + 8);
+                                    break;
+                                case 8:
+                                    tvDayCount.setText("You're on Day: " + 9);
+                                    break;
+                                case 9:
+                                    tvDayCount.setText("You're on Day: " + 10);
+                                    break;
+                                case 10:
+                                    tvDayCount.setText("You're on Day: " + 11);
+                                    break;
+                                case 11:
+                                    tvDayCount.setText("You're on Day: " + 12);
+                                    break;
+                                case 12:
+                                    tvDayCount.setText("You're on Day: " + 13);
+                                    break;
+                                case 13:
+                                    tvDayCount.setText("You're on your Last Day!: " + 14);
+                                    break;
+                                default:
+                                    tvDayCount.setText("You're on Day: " + 1);
+                                    break;
+                            }
+                                if (i ==14){
+                                tvDayCount.setText("Congratulations! Your Quarantine is Over!");
+                                btnRestart.setVisibility(View.VISIBLE);
+                                }
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -148,6 +204,8 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
                 } else {
                     beginBtn.setVisibility(View.VISIBLE);
+                    tvDayCount.setVisibility(View.INVISIBLE);
+
                 }
             }
 
@@ -156,42 +214,6 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
             }
         });
-
-        /*
-        To retrieve data, as type long
-
-        public static String getTimeDate(long timestamp){
-            try{
-                DateFormat dateFormat = getDateTimeInstance();
-                Date netDate = (new Date(timestamp));
-                return dateFormat.format(netDate);
-            } catch(Exception e) {
-                return "date";
-            }
-
-       Alarm Manager
-https://developer.android.com/training/scheduling/alarms
-
-
-    }
-         */
-//
-//        ScheduledExecutorService scheduleTaskExecutor = Executors.newScheduledThreadPool(1);
-//
-//        // This schedule a task to run every 5 seconds for testing:
-//        scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
-//            public void run() {
-//                if (clicked) {
-//                    doTheActualJobWhenButtonClicked();
-//                }
-//            }
-//        }, 0, 10, TimeUnit.SECONDS);
-
-        /*
-        getContinueExistingPeriodicTasksAfterShutdownPolicy()
-        Gets the policy on whether to continue executing existing periodic tasks even when this executor has been shutdown.
-
-         */
 
         // Current date settext counter
         final Handler someHandler = new Handler(getMainLooper());
@@ -203,20 +225,35 @@ https://developer.android.com/training/scheduling/alarms
             }
         }, 10);
 
-
         return rootView;
     }
+
+    //restart quarantine cycle click
+    public View.OnClickListener restartClick = new View.OnClickListener() {
+        public void onClick(View v) {
+
+            onButtonShowPopupWindowClick(v);
+
+        }
+    };
 
     //popup window click
     public View.OnClickListener popClick = new View.OnClickListener() {
         public void onClick(View v) {
 
-            onButtonShowPopupWindowClick(v);
-//            startAlert();
+            onButtonRestartClick(v);
 
         }
 
     };
+    public void onButtonRestartClick(View view) {
+        for(int i = 0; i < 14; i++) {
+            checkboxes.get(i).setChecked(false);
+        }
+        btnRestart.setVisibility(View.INVISIBLE);
+
+    }
+
 
     public void onButtonShowPopupWindowClick(View view) {
 

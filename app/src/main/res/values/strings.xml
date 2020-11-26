@@ -57,4 +57,6 @@
     <string name="asmr2">ASMR2</string>
     <string name="asmr3">Meditation</string>
     <string name="day">Yesterday’s the past, tomorrow’s the future, but today is a gift. That’s why it’s called the present.</string>
+    <string name="currentDay">"You're on Day: "</string>
+    <string name="restart_cycle">Restart Quarantine Cycle?</string>
 </resources>

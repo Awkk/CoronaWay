@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuarantineFragment"
@@ -75,6 +81,15 @@
             app:strokeWidth="5dp"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="37dp"/>
+
+        <TextView
+            android:id="@+id/tv_dayCount"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/com_facebook_button_text_color"
+            android:textSize="17sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -223,6 +238,23 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/btn_restart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/restart_cycle"
+                android:textColor="@color/com_facebook_button_text_color"
+                android:textSize="15sp"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="8dp"
+                app:rippleColor="#33AAAAAA"
+                app:strokeColor="@color/com_facebook_button_text_color"
+                app:strokeWidth="5dp"
+                android:layout_marginStart="30dp"
+                />
+
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/message_of_day_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -258,3 +290,4 @@
     </LinearLayout>
 
 </FrameLayout>
+</ScrollView>
