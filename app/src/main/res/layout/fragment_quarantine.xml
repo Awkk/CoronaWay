@@ -58,13 +58,23 @@
         <!--            android:textColor="@color/design_default_color_background" />-->
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="35dp"
             android:text="@string/start_quarantine_text"
             android:textColor="@color/design_default_color_background"
+            android:paddingVertical="20dp"
             android:textSize="29sp" />
+
+        <TextView
+            android:id="@+id/tv_dayStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginBottom="35dp"
+            android:textColor="@color/com_facebook_button_text_color"
+            android:textSize="17sp" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -79,21 +89,30 @@
             app:rippleColor="#33AAAAAA"
             app:strokeColor="@color/com_facebook_button_text_color"
             app:strokeWidth="5dp"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="37dp"/>
+            android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
-        <TextView
-            android:id="@+id/tv_dayCount"
-            android:layout_width="205dp"
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/btn_restart"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            android:text="@string/restart"
             android:textColor="@color/com_facebook_button_text_color"
-            android:textSize="17sp" />
+            android:textSize="15sp"
+            app:backgroundTint="@android:color/transparent"
+            app:cornerRadius="8dp"
+            app:rippleColor="#33AAAAAA"
+            app:strokeColor="@color/com_facebook_button_text_color"
+            app:strokeWidth="5dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin" />
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:orientation="horizontal"
             android:layout_gravity="center" >
 
@@ -165,6 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingLeft="10dp"
             android:layout_gravity="center" >
 
             <CheckBox
@@ -236,21 +256,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:id="@+id/btn_restart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/restart_cycle"
-                android:textColor="@color/com_facebook_button_text_color"
-                android:textSize="15sp"
-                app:backgroundTint="@android:color/transparent"
-                app:cornerRadius="8dp"
-                app:rippleColor="#33AAAAAA"
-                app:strokeColor="@color/com_facebook_button_text_color"
-                app:strokeWidth="5dp"
-                android:layout_marginStart="30dp"
-                />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                android:id="@+id/btn_restart"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/restart_cycle"-->
+<!--                android:textColor="@color/com_facebook_button_text_color"-->
+<!--                android:textSize="15sp"-->
+<!--                app:backgroundTint="@android:color/transparent"-->
+<!--                app:cornerRadius="8dp"-->
+<!--                app:rippleColor="#33AAAAAA"-->
+<!--                app:strokeColor="@color/com_facebook_button_text_color"-->
+<!--                app:strokeWidth="5dp"-->
+<!--                android:layout_marginStart="30dp"-->
+<!--                />-->
 
 
             <com.google.android.material.button.MaterialButton

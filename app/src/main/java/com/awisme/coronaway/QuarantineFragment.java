@@ -73,11 +73,14 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         databaseUsers = FirebaseDatabase.getInstance().getReference();
     }
 
+    TextView tvStatus;
+    TextView tvDayStart;
     Button btn;
     Button beginBtn;
     Button popBtn;
     Button btnRestart;
     List<CheckBox> checkboxes;
+    String userid;
 
     //declare boolean
     boolean clicked = false;
@@ -105,6 +108,9 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox13));
         checkboxes.add((CheckBox) rootView.findViewById(R.id.checkBox14));
 
+        tvStatus = rootView.findViewById(R.id.tv_status);
+        tvDayStart = rootView.findViewById(R.id.tv_dayStart);
+
         btn = (Button) rootView.findViewById(R.id.symptoms_btn);
         btn.setOnClickListener(this);
 
@@ -124,88 +130,49 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
         final TextView date = (TextView) rootView.findViewById(R.id.date_placeholder);
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String userid = user.getUid();
+        userid = user.getUid();
 
-        final TextView tvDayCount = (TextView)rootView.findViewById(R.id.tv_dayCount);
 
-        btnRestart = (Button)rootView.findViewById(R.id.btn_restart);
-        btnRestart.setVisibility(View.INVISIBLE);
+        btnRestart = (Button) rootView.findViewById(R.id.btn_restart);
         btnRestart.setOnClickListener(restartClick);
 
 
-        databaseUsers.child("users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseUsers.child("users").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    beginBtn.setVisibility(View.INVISIBLE);
-                    tvDayCount.setVisibility(View.VISIBLE);
+                    beginBtn.setVisibility(View.GONE);
                     Posting posting = dataSnapshot.getValue(Posting.class);
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
                     Date startDate;
                     try {
                         startDate = formatter.parse(posting.getDate());
                         long diffInMillis = Math.abs(Calendar.getInstance().getTimeInMillis() - startDate.getTime());
-                        long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-                        for(int i = 0; i < diffInDays; i++){
+                        int diffInDays = (int) TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+
+                        tvDayStart.setText("Started on " + formatter.format(startDate));
+
+                        if (diffInDays >= 14) {
+                            diffInDays = 14;
+                            tvStatus.setText("Congratulations! Your Quarantine is Over!");
+                            btnRestart.setVisibility(View.VISIBLE);
+                        } else {
+                            tvStatus.setText("You're on Day: " + (diffInDays + 1));
+                            btnRestart.setVisibility(View.GONE);
+                        }
+
+                        for (int i = 0; i < diffInDays; i++) {
                             checkboxes.get(i).setChecked(true);
-                            switch(i) {
-                                case 1:
-                                    tvDayCount.setText("You're on Day: " + 2);
-                                    break;
-                                case 2:
-                                    tvDayCount.setText("You're on Day: " + 3);
-                                    break;
-                                case 3:
-                                    tvDayCount.setText("You're on Day: " + 4);
-                                    break;
-                                case 4:
-                                    tvDayCount.setText("You're on Day: " + 5);
-                                    break;
-                                case 5:
-                                    tvDayCount.setText("You're on Day: " + 6);
-                                    break;
-                                case 6:
-                                    tvDayCount.setText("You're on Day: " + 7);
-                                    break;
-                                case 7:
-                                    tvDayCount.setText("You're on Day: " + 8);
-                                    break;
-                                case 8:
-                                    tvDayCount.setText("You're on Day: " + 9);
-                                    break;
-                                case 9:
-                                    tvDayCount.setText("You're on Day: " + 10);
-                                    break;
-                                case 10:
-                                    tvDayCount.setText("You're on Day: " + 11);
-                                    break;
-                                case 11:
-                                    tvDayCount.setText("You're on Day: " + 12);
-                                    break;
-                                case 12:
-                                    tvDayCount.setText("You're on Day: " + 13);
-                                    break;
-                                case 13:
-                                    tvDayCount.setText("You're on your Last Day!: " + 14);
-                                    break;
-                                default:
-                                    tvDayCount.setText("You're on Day: " + 1);
-                                    break;
-                            }
-                                if (i ==14){
-                                tvDayCount.setText("Congratulations! Your Quarantine is Over!");
-                                btnRestart.setVisibility(View.VISIBLE);
-                                }
+                        }
+                        for (int i = 13; i >= diffInDays; i--) {
+                            checkboxes.get(i).setChecked(false);
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
-
                 } else {
                     beginBtn.setVisibility(View.VISIBLE);
-                    tvDayCount.setVisibility(View.INVISIBLE);
-
                 }
             }
 
@@ -231,28 +198,18 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
     //restart quarantine cycle click
     public View.OnClickListener restartClick = new View.OnClickListener() {
         public void onClick(View v) {
-
-            onButtonShowPopupWindowClick(v);
-
+            saveSessionToFirebase();
+            btnRestart.setVisibility(View.GONE);
         }
     };
 
     //popup window click
     public View.OnClickListener popClick = new View.OnClickListener() {
         public void onClick(View v) {
-
-            onButtonRestartClick(v);
-
+            onButtonShowPopupWindowClick(v);
         }
 
     };
-    public void onButtonRestartClick(View view) {
-        for(int i = 0; i < 14; i++) {
-            checkboxes.get(i).setChecked(false);
-        }
-        btnRestart.setVisibility(View.INVISIBLE);
-
-    }
 
 
     public void onButtonShowPopupWindowClick(View view) {
@@ -356,7 +313,7 @@ public class QuarantineFragment extends Fragment implements View.OnClickListener
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getContext(),LoginActivity.class));
+        startActivity(new Intent(getContext(), LoginActivity.class));
         getActivity().finish();
     }
 
